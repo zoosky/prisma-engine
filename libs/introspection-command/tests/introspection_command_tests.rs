@@ -5,42 +5,14 @@ use datamodel::{
     ScalarListStrategy,
 };
 use introspection_command::calculate_model;
-use log::LevelFilter;
 use pretty_assertions::assert_eq;
 use std::collections::HashSet;
-use std::sync::atomic::{AtomicBool, Ordering};
 
-static IS_SETUP: AtomicBool = AtomicBool::new(false);
+#[macro_use]
+extern crate lazy_static;
 
-fn setup() {
-    let is_setup = IS_SETUP.load(Ordering::Relaxed);
-    if is_setup {
-        return;
-    }
-
-    let log_level = match std::env::var("TEST_LOG")
-        .unwrap_or("warn".to_string())
-        .to_lowercase()
-        .as_ref()
-    {
-        "trace" => LevelFilter::Trace,
-        "debug" => LevelFilter::Debug,
-        "info" => LevelFilter::Info,
-        "warn" => LevelFilter::Warn,
-        "error" => LevelFilter::Error,
-        _ => LevelFilter::Warn,
-    };
-    fern::Dispatch::new()
-        .format(|out, message, record| {
-            out.finish(format_args!("[{}][{}] {}", record.target(), record.level(), message))
-        })
-        .level(log_level)
-        .chain(std::io::stdout())
-        .apply()
-        .expect("fern configuration");
-
-    IS_SETUP.store(true, Ordering::Relaxed);
-}
+mod common;
+use common::*;
 
 #[test]
 fn a_data_model_can_be_generated_from_a_schema() {
