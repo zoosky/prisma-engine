@@ -1,7 +1,5 @@
-extern crate log;
-extern crate slog;
 #[macro_use]
-extern crate slog_scope;
+extern crate log;
 #[macro_use]
 extern crate rust_embed;
 #[macro_use]
@@ -21,10 +19,13 @@ mod utilities;
 use clap::{App as ClapApp, Arg, SubCommand};
 use cli::*;
 use error::*;
-use logger::Logger;
 use request_handlers::{PrismaRequest, RequestHandler};
 use server::HttpServer;
 use std::{env, error::Error, process};
+use logger;
+use tracing_log::LogTracer;
+use tracing::subscriber;
+use tracing_subscriber::{FmtSubscriber, EnvFilter};
 
 pub type PrismaResult<T> = Result<T, PrismaError>;
 
@@ -97,7 +98,15 @@ fn main() -> Result<(), Box<dyn Error + Send + Sync + 'static>> {
             }
         }
     } else {
-        let _logger = Logger::build("prisma"); // keep in scope
+        LogTracer::init()?;
+
+        let subscriber = FmtSubscriber::builder()
+            .with_env_filter(EnvFilter::from_default_env())
+            .finish();
+
+        subscriber::set_global_default(subscriber)?;
+
+        error!("LOL");
 
         let port = matches
             .value_of("port")

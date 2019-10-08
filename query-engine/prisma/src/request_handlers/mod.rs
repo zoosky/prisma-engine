@@ -6,16 +6,16 @@ pub use graphql::{GraphQlBody, GraphQlRequestHandler};
 use crate::{context::PrismaContext, server::RequestContext};
 use actix_web::HttpRequest;
 use serde_json;
-use std::collections::HashMap;
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc, fmt::Debug};
 
 pub trait RequestHandler {
-    type Body;
+    type Body: Debug;
 
     fn handle<S: Into<PrismaRequest<Self::Body>>>(&self, req: S, ctx: &PrismaContext) -> serde_json::Value;
 }
 
-pub struct PrismaRequest<T> {
+#[derive(Debug)]
+pub struct PrismaRequest<T: Debug> {
     pub body: T,
     pub headers: HashMap<String, String>,
     pub path: String,
