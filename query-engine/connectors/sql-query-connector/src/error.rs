@@ -123,8 +123,6 @@ impl From<SqlError> for ConnectorError {
     }
 }
 
-
-
 impl From<prisma_query::error::Error> for SqlError {
     fn from(e: prisma_query::error::Error) -> Self {
         match e {
