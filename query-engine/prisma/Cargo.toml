@@ -10,11 +10,10 @@ sql = ["sql-query-connector", "prisma-query"]
 graphql = ["graphql-parser"]
 
 [dependencies]
-tokio = { version = "0.2.0-alpha.5", features = ["tracing"] }
-tokio-executor = "0.2.0-alpha.5"
-futures-preview = { version = "0.3.0-alpha.18", features = ["compat"] }
+tokio = { version = "0.2.0-alpha.6", features = ["tracing"] }
+futures-preview = { version = "0.3.0-alpha.19", features = ["compat"] }
 http = "0.1"
-hyper = { version = "0.13.0-alpha.2", features = ["unstable-stream"] }
+hyper = { version = "0.13.0-alpha.4", features = ["unstable-stream"] }
 num_cpus = "1.10"
 
 pretty_env_logger = "0.3"

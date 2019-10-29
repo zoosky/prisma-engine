@@ -1865,7 +1865,6 @@ dependencies = [
  "serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)",
  "sql-query-connector 0.1.0",
  "tokio 0.2.0-alpha.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "tokio-executor 0.2.0-alpha.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "tracing 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "tracing-attributes 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "tracing-log 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
